@@ -208,12 +208,27 @@ function get_all(db_name) {
 	return database[db_name].data;
 }
 
+var fehlendeLehrer = [];
+
 function get_vertretung() {
-	var i, d = get_all("vertretung");
+	var i, d = get_all("vertretung"),
+		html = "";
 	for (i = 0; i < d.length; ++i) {
-		document.write("Kurs: " + get_all("kurse")[d[i][0]].splice(2).join("").replace("true", "GK").replace("false", "LK") +
+		fehlendeLehrer.push(get_all("kurse")[d[i][0]][1]);
+		html += ("Kurs: " + get_all("kurse")[d[i][0]].splice(2).join("").replace("true", "GK").replace("false", "LK") +
 			"<br/>Lehrer: " + get_all("lehrer")[get_all("kurse")[d[i][0]][1]][3] +
 			"<br/>Fach: " + get_all("fächer")[get_all("kurse")[d[i][0]][0]][1] +
 			"<br/>Raum: " + (get_all("räume")[d[i][1]].join("")));
 	}
+	document.getElementById("vertretung").innerHTML = html;
+}
+
+function get_fehlende_lehrer() {
+	var i, a = [],
+		html = "Fehlende Lehrer: ";
+	for (i = 0; i < fehlendeLehrer.length; ++i) {
+		a.push(get_all("lehrer")[fehlendeLehrer[i]][3]);
+	}
+	html += a.join(" - ");
+	document.getElementById("fehlendeLehrer").innerHTML = html;
 }
