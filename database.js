@@ -135,11 +135,11 @@ var database = {
 	},
 	"vertretung": {
 		"rowInformation": [
-			"KursID", "RaumID", "datestamp"
+			"KursID", "RaumID", "LehrerID", "datestamp"
 		],
 		"data": [
 			[
-				0, 1, 17022017
+				0, 1, 0, 17022017
 			]
 		]
 	},
@@ -208,17 +208,20 @@ function get_all(db_name) {
 	return database[db_name].data;
 }
 
-var fehlendeLehrer = [];
+var fehlendeLehrer = [],
+	vertretendeLehrer = [];
 
 function get_vertretung() {
 	var i, d = get_all("vertretung"),
 		html = "";
 	for (i = 0; i < d.length; ++i) {
 		fehlendeLehrer.push(get_all("kurse")[d[i][0]][1]);
-		html += ("Kurs: " + get_all("kurse")[d[i][0]].splice(2).join("").replace("true", "GK").replace("false", "LK") +
-			"<br/>Lehrer: " + get_all("lehrer")[get_all("kurse")[d[i][0]][1]][3] +
-			"<br/>Fach: " + get_all("fächer")[get_all("kurse")[d[i][0]][0]][1] +
-			"<br/>Raum: " + (get_all("räume")[d[i][1]].join("")));
+		vertretendeLehrer.push(d[i][2]);
+		html += "" + get_all("lehrer")[get_all("kurse")[d[i][0]][1]][3] +
+			" - " + get_all("lehrer")[d[i][2]][3] +
+			"<br/>" + get_all("kurse")[d[i][0]].splice(2).join("").replace("true", "GK").replace("false", "LK") +
+			", " + get_all("fächer")[get_all("kurse")[d[i][0]][0]][1] +
+			", " + (get_all("räume")[d[i][1]].join(""));
 	}
 	document.getElementById("vertretung").innerHTML = html;
 }
@@ -231,4 +234,14 @@ function get_fehlende_lehrer() {
 	}
 	html += a.join(" - ");
 	document.getElementById("fehlendeLehrer").innerHTML = html;
+}
+
+function get_vertretende_lehrer() {
+	var i, a = [],
+		html = "Vertretende Lehrer: ";
+	for (i = 0; i < vertretendeLehrer.length; ++i) {
+		a.push(get_all("lehrer")[vertretendeLehrer[i]][3]);
+	}
+	html += a.join(" - ");
+	document.getElementById("vertretendeLehrer").innerHTML = html;
 }
