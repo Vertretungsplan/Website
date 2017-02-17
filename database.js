@@ -30,15 +30,30 @@ var database = {
 			"Abkürzung", "Name"
 		],
 		"data": [
-			[
-				"PH", "Physik"
-			],
-			[
-				"M", "Mathe"
-			],
-			[
-				"SP", "Sport"
-			]
+			["PH", "Physik"],
+			["BI", "Biologie"],
+			["MU", "Musik"],
+			["CH", "Chemie"],
+			["SP", "Sport"],
+			["EK", "Erdkunde"],
+			["D", "Deutsch"],
+			["M", "Mathe"],
+			["E5", "Englisch"],
+			["S", "Spanisch"],
+			["L", "Latein"],
+			["F5", "Französisch ab 5. Klasse"],
+			["F7", "Französisch ab 7. Klasse"],
+			["EW", "Erziehungswissenschaften"],
+			["SW", "Sozialwissenschaften"],
+			["PK", "Politik"],
+			["PA", "Pädagogik"],
+			["GE", "Geschichte"],
+			["KU", "Kunst"],
+			["KR", "Katholische Religion"],
+			["ER", "Evangelische Religion"],
+			["IF", "Informatik"],
+			["VTM", "Vertiefung Mathe"],
+			["VTE", "Vertiefung Englisch"]
 		]
 	},
 	"kurse": {
@@ -140,6 +155,9 @@ var database = {
 		"data": [
 			[
 				0, 1, 0, 17022017
+			],
+			[
+				2, 0, 1, 17022017
 			]
 		]
 	},
@@ -221,7 +239,8 @@ function get_vertretung() {
 			" - " + get_all("lehrer")[d[i][2]][3] +
 			"<br/>" + get_all("kurse")[d[i][0]].splice(2).join("").replace("true", "GK").replace("false", "LK") +
 			", " + get_all("fächer")[get_all("kurse")[d[i][0]][0]][1] +
-			", " + (get_all("räume")[d[i][1]].join(""));
+			", " + (get_all("räume")[d[i][1]].join("")) +
+			"<br/><br/>";
 	}
 	document.getElementById("vertretung").innerHTML = html;
 }
