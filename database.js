@@ -436,7 +436,7 @@ var database = {
 	],
 	"aufgaben": [{
 		"VertretungID": 0,
-		"URL": "bastgen.de/aufgabe.jpg",
+		"URL": "bastgen.de/schule/physik/11/Material/Stoss.pdf",
 		"data-type": "image/jpg"
 	}],
 	"rollen": [{
@@ -466,6 +466,10 @@ var database = {
 		"FachID1": 0,
 		"FachID2": 1,
 		"distance": 4
+	}],
+	"fehlendeklassen": [{
+		"klassen": "9a, 9c",
+		"grund": "Skifreizeit"
 	}]
 }
 
@@ -480,9 +484,19 @@ function get(db_name) {
 var fehlendeLehrer = [],
 	vertretendeLehrer = [];
 
+function get_aufgaben(vid) {
+	var i, results = [];
+	for (i = 0; i < get("aufgaben").length; ++i)
+		if (get("aufgaben")[i].VertretungID == vid)
+			results.push(get("aufgaben")[i].URL);
+	return results;
+}
+
 function get_vertretung() {
+	write_date();
+	get_fehlende_klassen();
 	var i, d = get("vertretung"),
-		html = "";
+		html = "<div style='clear:both;height:0px;'>&nbsp;</div>";
 	for (i = 0; i < d.length; ++i) {
 		fehlendeLehrer.push(get("kurse")[d[i].KursID].LehrerID);
 		vertretendeLehrer.push(d[i].LehrerID);
@@ -491,9 +505,24 @@ function get_vertretung() {
 			"</b><br/>" + (get("kurse")[d[i].KursID].GK ? "GK" : "LK") + get("kurse")[d[i].KursID].Nummer +
 			", " + get_all("fächer")[get("kurse")[d[i].KursID].FachID][1] +
 			", " + (get("räume")[d[i].RaumID].trakt + get("räume")[d[i].RaumID].nummer) +
+			"<br/>" + (get_aufgaben(i).length > 0 ? "<a href='http://" + get_aufgaben(i)[0] + "' target='_BLANK'>Aufgaben</a>" : "") +
 			"</div>";
 	}
-	document.getElementById("vertretung").innerHTML = html;
+	document.getElementById("vertretung").innerHTML += html;
+}
+
+function get_fehlende_klassen() {
+	var i, html = "";
+	for (i = 0; i < get("fehlendeklassen").length; ++i) {
+		html += "<div class='vertretung-small'>Fehlende Klassen:<br/>" + get("fehlendeklassen")[i].klassen +
+			"<br/>wegen " + get("fehlendeklassen")[i].grund +
+			"</div>"
+	}
+	document.getElementById("vertretung").innerHTML += html;
+}
+
+function write_date() {
+	document.getElementById("vertretung").innerHTML = "<div class='vertretung-small'><b>A-Woche</b><br/>Montag, 20.Feb.2017</div>";
 }
 
 function get_fehlende_lehrer() {
