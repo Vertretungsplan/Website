@@ -330,39 +330,43 @@ var database = {
 		},
 		{
 			"FachID": 1,
-			"LehrerID": 1,
+			"LehrerID": 2,
 			"GK": false,
 			"Nummer": 5
 		},
 		{
 			"FachID": 2,
-			"LehrerID": 0,
+			"LehrerID": 4,
 			"GK": true,
 			"Nummer": 1
 		}
 	],
-	"blöcke": {
-		"rowInformation": [
-			"AWoche", "Wochentag", "Block"
-		],
-		"data": [
-			[
-				true, 2, 1
-			],
-			[
-				true, 2, 2
-			],
-			[
-				true, 2, 3
-			],
-			[
-				true, 2, 4
-			],
-			[
-				true, 2, 5
-			]
-		]
-	},
+	"blöcke": [{
+			"AWoche": true,
+			"Wochentag": 1,
+			"Block": 1
+		},
+		{
+			"AWoche": true,
+			"Wochentag": 1,
+			"Block": 2
+		},
+		{
+			"AWoche": true,
+			"Wochentag": 1,
+			"Block": 3
+		},
+		{
+			"AWoche": true,
+			"Wochentag": 1,
+			"Block": 4
+		},
+		{
+			"AWoche": true,
+			"Wochentag": 1,
+			"Block": 5
+		}
+	],
 	"räume": [{
 			"trakt": "A",
 			"nummer": "104"
@@ -414,27 +418,27 @@ var database = {
 			]
 		]
 	},
-	"vertretung": {
-		"rowInformation": [
-			"KursID", "RaumID", "LehrerID", "datestamp"
-		],
-		"data": [
-			[
-				0, 1, 0, 17022017
-			],
-			[
-				2, 0, 1, 17022017
-			]
-		]
-	},
-	"aufgaben": {
-		"rowInformation": [
-			"VertretungID", "URL", "data-type"
-		],
-		"data": [
-			[0, "bastgen.de/aufgabe.gpg", "image/jpg"]
-		]
-	},
+	"vertretung": [{
+			"KursID": 0,
+			"RaumID": 1,
+			"LehrerID": 18
+		},
+		{
+			"KursID": 2,
+			"RaumID": 0,
+			"LehrerID": 19
+		},
+		{
+			"KursID": 1,
+			"RaumID": 1,
+			"LehrerID": 21
+		}
+	],
+	"aufgaben": [{
+		"VertretungID": 0,
+		"URL": "bastgen.de/aufgabe.jpg",
+		"data-type": "image/jpg"
+	}],
 	"rollen": [{
 			"name": "schueler"
 		},
@@ -445,25 +449,19 @@ var database = {
 			"name": "admin"
 		}
 	],
-	"nutzer": {
-		"rowInformation": [
-			"isSchueler", "SLID", "passwort", "RollenID"
-		],
-		"data": [
-			[
-				true, 0, "freds passwort", 2
-			],
-			[
-				true, 1, "niks passwort", 0
-			],
-			[
-				false, 0, "ziesses passwort", 1
-			],
-			[
-				false, 1, "herr bastgens ultrasicheres passwort ¹³¼½¬{[]]{µſđŋ↓ø}", 1
-			]
-		]
-	},
+	"nutzer": [{
+			"isSchueler": true,
+			"SLID": 0,
+			"password": "freds passwort",
+			"RollenID": 2
+		},
+		{
+			"isSchueler": true,
+			"SLID": 1,
+			"password": "niks passwort",
+			"RollenID": 0
+		}
+	],
 	"fachfach": [{
 		"FachID1": 0,
 		"FachID2": 1,
@@ -483,17 +481,17 @@ var fehlendeLehrer = [],
 	vertretendeLehrer = [];
 
 function get_vertretung() {
-	var i, d = get_all("vertretung"),
+	var i, d = get("vertretung"),
 		html = "";
 	for (i = 0; i < d.length; ++i) {
-		fehlendeLehrer.push(get("kurse")[d[i][0]].LehrerID);
-		vertretendeLehrer.push(d[i][2]);
-		html += "" + get("lehrer")[get("kurse")[d[i][0]].LehrerID].abk +
-			" - " + get("lehrer")[d[i][2]].abk +
-			"<br/>" + (get("kurse")[d[i][0]].GK ? "GK" : "LK") + get("kurse")[d[i][0]].Nummer +
-			", " + get_all("fächer")[get("kurse")[d[i][0]].FachID][1] +
-			", " + (get("räume")[d[i][1]].trakt + get("räume")[d[i][1]].nummer) +
-			"<br/><br/>";
+		fehlendeLehrer.push(get("kurse")[d[i].KursID].LehrerID);
+		vertretendeLehrer.push(d[i].LehrerID);
+		html += "<div class='vertretung'><b>" + get("lehrer")[get("kurse")[d[i].KursID].LehrerID].abk +
+			" - " + get("lehrer")[d[i].LehrerID].abk +
+			"</b><br/>" + (get("kurse")[d[i].KursID].GK ? "GK" : "LK") + get("kurse")[d[i].KursID].Nummer +
+			", " + get_all("fächer")[get("kurse")[d[i].KursID].FachID][1] +
+			", " + (get("räume")[d[i].RaumID].trakt + get("räume")[d[i].RaumID].nummer) +
+			"</div>";
 	}
 	document.getElementById("vertretung").innerHTML = html;
 }
