@@ -2,17 +2,27 @@
 <html>
 	<head>
 		<script src="database.js"></script>
+		<script src="menu.js"></script>
 		<meta name="author" content="YTCuber"/>
 		<link rel="stylesheet" type="text/css" href="style.css"/>
 	</head>
 	<body>
-		<div id="fehlendeLehrer"></div>
-		<div id="vertretung"></div>
-		<div id="vertretendeLehrer"></div>
+		<div id="menu"></div>
+		<div class="t" id="v">
+			<div id="fehlendeLehrer"></div>
+			<div id="vertretung"></div>
+			<div id="vertretendeLehrer"></div>
+		</div>
+		<div class="t" id="w">
+			<h2>Meine Daten</h2>
+		</div>
 		<script>
 		get_vertretung();
 		get_fehlende_lehrer();
 		get_vertretende_lehrer();
+		get_nutzerdaten();
+		add_menu();
+		sw(current);
 		</script>
 	</body>
 </html>

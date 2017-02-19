@@ -293,7 +293,7 @@ var database = {
 	],
 	"fächer": [{
 			"abk": "M",
-			"name": "Mathemathik"
+			"name": "Mathematik"
 		},
 		{
 			"abk": "D",
@@ -557,14 +557,16 @@ var database = {
 		"klassen": "9a, 9c",
 		"grund": "Skifreizeit"
 	}]
-}
+};
+const NID = 0; //Nutzer 1 ist eingeloggt
+
+var fehlendeLehrer = [],
+	vertretendeLehrer = [];
+
 
 function get(db_name) {
 	return database[db_name];
 }
-
-var fehlendeLehrer = [],
-	vertretendeLehrer = [];
 
 function get_aufgaben(vid) {
 	var i, results = [];
@@ -625,4 +627,26 @@ function get_vertretende_lehrer() {
 	}
 	html += a.join(" - ");
 	document.getElementById("vertretendeLehrer").innerHTML = html;
+}
+
+function get_nutzerdaten() {
+	var html = `
+		Nutzer ${NID} ist ein Sch&uuml;ler: ${get("nutzer")[NID].isSchueler}<br/>
+		Passwort: ${get("nutzer")[NID].password}<br/>Belegte Kurse:<br/><ol>
+	`,
+		i, kurse = [];
+	//TODO schuelerkurse nur bei schuelern filtern
+	for (i = 0; i < get("schuelerkurse").length; ++i) {
+		if (get("schuelerkurse")[i].SchuelerID == NID) {
+			//html += "Nutzer ist in Kurs " + get("schuelerkurse")[i].KursID + "<br/>"
+			kurse.push(get("schuelerkurse")[i].KursID);
+		}
+	}
+	for (i = 0; i < kurse.length; ++i) {
+		html += "<li>" + (get("kurse")[kurse[i]].GK ? "GK" : "LK") + get("kurse")[kurse[i]].Nummer +
+			" " + get("fächer")[get("kurse")[kurse[i]].FachID].name +
+			", bei " + get("lehrer")[get("kurse")[kurse[i]].LehrerID].abk + "</li>";
+	}
+	html += "</ol>"
+	document.getElementById("w").innerHTML += html;
 }

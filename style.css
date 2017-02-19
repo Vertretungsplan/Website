@@ -40,8 +40,19 @@
   position: absolute;
   bottom: 0;
   left: 0;
-  width: 100%;
+  width: 90%;
   height: 50px;
   font-size: 40px;
   border-top: 1px solid black;
+}
+
+#menu {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  display: block !important;
+}
+
+.t {
+  display: none;
 }
