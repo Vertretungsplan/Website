@@ -664,13 +664,15 @@ function get_nutzerdaten() {
 		Mail: ${get("schueler")[get("nutzer")[NID].SLID].mail}<br/>
 		Passwort: ${get("nutzer")[NID].password}<br/><br/>Belegte Kurse:<br/><ol>
 	`,
-		i, j, kurse = [];
+		i, j, kurse = [],
+		lehrer = [];
 	for (i = 0; i < get("schuelerkurse").length; ++i) {
 		if (get("schuelerkurse")[i].SchuelerID == NID) {
 			kurse.push(get("schuelerkurse")[i].KursID);
 		}
 	}
 	for (i = 0; i < kurse.length; ++i) {
+		lehrer.push(get("kurse")[kurse[i]].LehrerID);
 		html += "<li>" + (get("kurse")[kurse[i]].GK ? "GK" : "LK") + get("kurse")[kurse[i]].Nummer +
 			" " + get("fächer")[get("kurse")[kurse[i]].FachID].name +
 			", bei " + get("lehrer")[get("kurse")[kurse[i]].LehrerID].abk + "</li>";
@@ -682,6 +684,12 @@ function get_nutzerdaten() {
 			}
 		}
 	}
-	html += "</ol>"
+	html += "</ol><br/>Lehrer:<br/>"
+	for (i = 0; i < lehrer.length; ++i) {
+		html += get("lehrer")[lehrer[i]].abk +
+			": " + get("lehrer")[lehrer[i]].nname +
+			" (<a href='mailto:" + get("lehrer")[lehrer[i]].mail +
+			"'>" + get("lehrer")[lehrer[i]].mail + "</a>)<br/>";
+	}
 	document.getElementById("w").innerHTML += html;
 }
