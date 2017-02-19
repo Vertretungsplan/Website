@@ -12,43 +12,71 @@ var database = {
 			"vname": "Folke",
 			"nname": "Andräs",
 			"mail": "andraes@gymnasium-lechenich.de",
-			"abk": "xx1"
+			"abk": "xx1",
+			"fächer": [
+				23
+			]
 		},
 		{
 			"vname": "Renate",
 			"nname": "Block",
 			"mail": "block@gymnasium-lechenich.de",
-			"abk": "BLO"
+			"abk": "BLO",
+			"fächer": [
+				1,
+				7,
+				14,
+				19
+			]
 		},
 		{
 			"vname": "Peter",
 			"nname": "Bastgen",
 			"mail": "bastgen@gymnasium-lechenich.de",
-			"abk": "BAS"
+			"abk": "BAS",
+			"fächer": [
+				0,
+				21
+			]
 		},
 		{
 			"vname": "Ulrike",
 			"nname": "Balters",
 			"mail": "balters@gymnasium-lechenich.de",
-			"abk": "BAL"
+			"abk": "BAL",
+			"fächer": [
+				20,
+				21
+			]
 		},
 		{
 			"vname": "Claudia",
 			"nname": "Behrensmeier",
 			"mail": "behrensmeier@gymnasium-lechenich.de",
-			"abk": "BHR"
+			"abk": "BHR",
+			"fächer": [
+				23
+			]
 		},
 		{
 			"vname": "Nanette",
 			"nname": "Berkessel",
 			"mail": "berkessel@gymnasium-lechenich.de",
-			"abk": "BRK"
+			"abk": "BRK",
+			"fächer": [
+				0,
+				20
+			]
 		},
 		{
 			"vname": "Nina",
 			"nname": "Böllert",
 			"mail": "boellert@gymnasium-lechenich.de",
-			"abk": "BOL"
+			"abk": "BOL",
+			"fächer": [
+				2,
+				5
+			]
 		},
 		{
 			"vname": "Barbara",
@@ -291,7 +319,7 @@ var database = {
 			"abk": "SLT"
 		}
 	],
-	"fächer": [{
+	"fächer": [{ //0
 			"abk": "M",
 			"name": "Mathematik"
 		},
@@ -311,7 +339,7 @@ var database = {
 			"abk": "F9",
 			"name": "Französisch ab 9"
 		},
-		{
+		{ //5
 			"abk": "S",
 			"name": "Spanisch"
 		},
@@ -331,7 +359,7 @@ var database = {
 			"abk": "Ge",
 			"name": "Geschichte"
 		},
-		{
+		{ //10
 			"abk": "Pl",
 			"name": "Politik"
 		},
@@ -351,7 +379,7 @@ var database = {
 			"abk": "Ew",
 			"name": "Erziehungswissenschaften"
 		},
-		{
+		{ //15
 			"abk": "Sw",
 			"name": "Sozialwissenschaften"
 		},
@@ -371,7 +399,7 @@ var database = {
 			"abk": "Bi",
 			"name": "Biologie"
 		},
-		{
+		{ //20
 			"abk": "Ch",
 			"name": "Chemie"
 		},
@@ -630,15 +658,15 @@ function get_vertretende_lehrer() {
 }
 
 function get_nutzerdaten() {
+	//Nur für Schüler
 	var html = `
-		Nutzer ${NID} ist ein Sch&uuml;ler: ${get("nutzer")[NID].isSchueler}<br/>
-		Passwort: ${get("nutzer")[NID].password}<br/>Belegte Kurse:<br/><ol>
+		Name: ${get("schueler")[get("nutzer")[NID].SLID].vname} ${get("schueler")[get("nutzer")[NID].SLID].nname}<br/>
+		Mail: ${get("schueler")[get("nutzer")[NID].SLID].mail}<br/>
+		Passwort: ${get("nutzer")[NID].password}<br/><br/>Belegte Kurse:<br/><ol>
 	`,
-		i, kurse = [];
-	//TODO schuelerkurse nur bei schuelern filtern
+		i, j, kurse = [];
 	for (i = 0; i < get("schuelerkurse").length; ++i) {
 		if (get("schuelerkurse")[i].SchuelerID == NID) {
-			//html += "Nutzer ist in Kurs " + get("schuelerkurse")[i].KursID + "<br/>"
 			kurse.push(get("schuelerkurse")[i].KursID);
 		}
 	}
@@ -646,6 +674,13 @@ function get_nutzerdaten() {
 		html += "<li>" + (get("kurse")[kurse[i]].GK ? "GK" : "LK") + get("kurse")[kurse[i]].Nummer +
 			" " + get("fächer")[get("kurse")[kurse[i]].FachID].name +
 			", bei " + get("lehrer")[get("kurse")[kurse[i]].LehrerID].abk + "</li>";
+		for (j = 0; j < get("kursblöcke").length; ++j) {
+			if (get("kursblöcke")[j].KursID == kurse[i]) {
+				html += (get("blöcke")[get("kursblöcke")[j].BlockID].AWoche ? "A" : "B") +
+					"-Woche " + ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"][get("blöcke")[get("kursblöcke")[j].BlockID].Wochentag] +
+					", " + get("blöcke")[get("kursblöcke")[j].BlockID].Block + ". Block<br/>";
+			}
+		}
 	}
 	html += "</ol>"
 	document.getElementById("w").innerHTML += html;
