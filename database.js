@@ -466,44 +466,44 @@ var database = {
 			"nummer": "3"
 		}
 	],
-	"kursblöcke": {
-		"rowInformation": [
-			"KursID", "BlockID", "RaumID"
-		],
-		"data": [
-			[
-				0, 2, 1
-			],
-			[
-				0, 3, 1
-			],
-			[
-				1, 2, 0
-			],
-			[
-				2, 4, 2
-			]
-		]
-	},
-	"schuelerkurse": {
-		"rowInformation": [
-			"SchuelerID", "KursID"
-		],
-		"data": [
-			[
-				0, 0
-			],
-			[
-				0, 1
-			],
-			[
-				1, 0
-			],
-			[
-				1, 2
-			]
-		]
-	},
+	"kursblöcke": [{
+			"KursID": 0,
+			"BlockID": 2,
+			"RaumID": 1
+		},
+		{
+			"KursID": 0,
+			"BlockID": 3,
+			"RaumID": 2
+		},
+		{
+			"KursID": 1,
+			"BlockID": 2,
+			"RaumID": 0
+		},
+		{
+			"KursID": 2,
+			"BlockID": 4,
+			"RaumID": 2
+		}
+	],
+	"schuelerkurse": [{
+			"SchuelerID": 0,
+			"KursID": 0
+		},
+		{
+			"SchuelerID": 0,
+			"KursID": 1
+		},
+		{
+			"SchuelerID": 1,
+			"KursID": 0
+		},
+		{
+			"SchuelerID": 1,
+			"KursID": 2
+		}
+	],
 	"vertretung": [{
 			"KursID": 0,
 			"RaumID": 1,
@@ -557,10 +557,6 @@ var database = {
 		"klassen": "9a, 9c",
 		"grund": "Skifreizeit"
 	}]
-}
-
-function get_all(db_name) {
-	return database[db_name].data;
 }
 
 function get(db_name) {
