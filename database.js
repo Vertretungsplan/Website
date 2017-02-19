@@ -291,37 +291,123 @@ var database = {
 			"abk": "SLT"
 		}
 	],
-	"fächer": {
-		"rowInformation": [
-			"Abkürzung", "Name"
-		],
-		"data": [
-			["PH", "Physik"],
-			["BI", "Biologie"],
-			["MU", "Musik"],
-			["CH", "Chemie"],
-			["SP", "Sport"],
-			["EK", "Erdkunde"],
-			["D", "Deutsch"],
-			["M", "Mathemathik"],
-			["E5", "Englisch"],
-			["S", "Spanisch"],
-			["L", "Latein"],
-			["F5", "Französisch ab 5. Klasse"],
-			["F7", "Französisch ab 7. Klasse"],
-			["EW", "Erziehungswissenschaften"],
-			["SW", "Sozialwissenschaften"],
-			["PK", "Politik"],
-			["PA", "Pädagogik"],
-			["GE", "Geschichte"],
-			["KU", "Kunst"],
-			["KR", "Katholische Religion"],
-			["ER", "Evangelische Religion"],
-			["IF", "Informatik"],
-			["VTM", "Vertiefung Mathe"],
-			["VTE", "Vertiefung Englisch"]
-		]
-	},
+	"fächer": [{
+			"abk": "M",
+			"name": "Mathemathik"
+		},
+		{
+			"abk": "D",
+			"name": "Deutsch"
+		},
+		{
+			"abk": "E5",
+			"name": "Englisch ab 5"
+		},
+		{
+			"abk": "F6",
+			"name": "Französisch ab 6"
+		},
+		{
+			"abk": "F9",
+			"name": "Französisch ab 9"
+		},
+		{
+			"abk": "S",
+			"name": "Spanisch"
+		},
+		{
+			"abk": "L",
+			"name": "Latein"
+		},
+		{
+			"abk": "Ku",
+			"name": "Kunst"
+		},
+		{
+			"abk": "Mu",
+			"name": "Musik"
+		},
+		{
+			"abk": "Ge",
+			"name": "Geschichte"
+		},
+		{
+			"abk": "Pl",
+			"name": "Politik"
+		},
+		{
+			"abk": "ZKG",
+			"name": "Zusatzkurs Geschichte"
+		},
+		{
+			"abk": "Erdkunde",
+			"name": "Ek"
+		},
+		{
+			"abk": "Pp",
+			"name": "Philosophie"
+		},
+		{
+			"abk": "Ew",
+			"name": "Erziehungswissenschaften"
+		},
+		{
+			"abk": "Sw",
+			"name": "Sozialwissenschaften"
+		},
+		{
+			"abk": "ZKS",
+			"name": "Zusatzkurs Sozialwissenschaften"
+		},
+		{
+			"abk": "Kr",
+			"name": "Katholische Religion"
+		},
+		{
+			"abk": "Er",
+			"name": "Evangelische Religion"
+		},
+		{
+			"abk": "Bi",
+			"name": "Biologie"
+		},
+		{
+			"abk": "Ch",
+			"name": "Chemie"
+		},
+		{
+			"abk": "Ph",
+			"name": "Physik"
+		},
+		{
+			"abk": "If",
+			"name": "Informatik"
+		},
+		{
+			"abk": "Sp",
+			"name": "Sport"
+		},
+		{
+			"abk": "VTE",
+			"name": "Vertiefungsfach Englisch"
+		},
+		{
+			"abk": "VTM",
+			"name": "Vertiefungsfach Mathematik"
+		},
+		{
+			"abk": "xx",
+			"name": "Projektkurs Sprachen"
+		},
+		{
+			"abk": "x1",
+			"name": "Projektkurs NW"
+		},
+		{
+			"abk": "Ele",
+			"name": "Elektronik"
+		}
+	],
 	"kurse": [{
 			"FachID": 0,
 			"LehrerID": 1,
@@ -503,7 +589,7 @@ function get_vertretung() {
 		html += "<div class='vertretung'><b>" + get("lehrer")[get("kurse")[d[i].KursID].LehrerID].abk +
 			" - " + get("lehrer")[d[i].LehrerID].abk +
 			"</b><br/>" + (get("kurse")[d[i].KursID].GK ? "GK" : "LK") + get("kurse")[d[i].KursID].Nummer +
-			", " + get_all("fächer")[get("kurse")[d[i].KursID].FachID][1] +
+			", " + get("fächer")[get("kurse")[d[i].KursID].FachID].name +
 			", " + (get("räume")[d[i].RaumID].trakt + get("räume")[d[i].RaumID].nummer) +
 			"<br/>" + (get_aufgaben(i).length > 0 ? "<a href='http://" + get_aufgaben(i)[0] + "' target='_BLANK'>Aufgaben</a>" : "") +
 			"</div>";
