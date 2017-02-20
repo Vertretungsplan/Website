@@ -46,11 +46,52 @@
   border-top: 1px solid black;
 }
 
-#menu {
+#menu-btn {
   position: absolute;
   bottom: 0;
   right: 0;
   display: block !important;
+}
+
+#menu-open {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 70%;
+  background-color: white;
+  z-index: 99;
+  border-right: 1px solid black;
+}
+
+#topnavigation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  border-bottom: 1px solid black;
+  background-color: #999999;
+  z-index: 98;
+}
+
+#content {
+  position: absolute;
+  top: 40px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+h3 {
+  background-color: #CCCCCC;
+  font-size: 20px;
+  height: 23px;
+}
+
+.icon {
+  font-size: 30px;
+  margin-right: 3px;
 }
 
 .t {

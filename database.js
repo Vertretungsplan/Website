@@ -659,10 +659,10 @@ function get_vertretende_lehrer() {
 
 function get_nutzerdaten() {
 	//Nur für Schüler
-	var html = `
+	var html = `<h3>Daten</h3>
 		Name: ${get("schueler")[get("nutzer")[NID].SLID].vname} ${get("schueler")[get("nutzer")[NID].SLID].nname}<br/>
 		Mail: ${get("schueler")[get("nutzer")[NID].SLID].mail}<br/>
-		Passwort: ${get("nutzer")[NID].password}<br/><br/>Belegte Kurse:<br/><ol>
+		Passwort: ${get("nutzer")[NID].password}<br/><h3>Belegte Brötchen/Kurse</h3><ol>
 	`,
 		i, j, kurse = [],
 		lehrer = [];
@@ -684,7 +684,7 @@ function get_nutzerdaten() {
 			}
 		}
 	}
-	html += "</ol><br/>Lehrer:<br/>"
+	html += "</ol><h3>Lehrer</h3>"
 	for (i = 0; i < lehrer.length; ++i) {
 		html += get("lehrer")[lehrer[i]].abk +
 			": " + get("lehrer")[lehrer[i]].nname +

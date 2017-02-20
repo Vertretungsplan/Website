@@ -10,13 +10,21 @@
 	</head>
 	<body>
 		<div id="menu"></div>
-		<div class="t" id="v">
-			<div id="fehlendeLehrer"></div>
-			<div id="vertretung"></div>
-			<div id="vertretendeLehrer"></div>
-		</div>
-		<div class="t" id="w">
-			<h2>Meine Daten</h2>
+		<div id="topnavigation"><span onclick='openmenu();' class="icon">&#9776;</span> <span id="location"></span></div>
+		<div id="content">
+			<div class="t" id="v">
+				<div id="fehlendeLehrer"></div>
+				<div id="vertretung"></div>
+				<div id="vertretendeLehrer"></div>
+			</div>
+			<div class="t" id="w">
+			</div>
+			<div class="t" id="x">
+				<h3>Stundenplan</h3>
+			</div>
+			<div class="t" id="e">
+				<h3>Einstellungen</h3>
+			</div>
 		</div>
 		<script>
 		get_vertretung();
